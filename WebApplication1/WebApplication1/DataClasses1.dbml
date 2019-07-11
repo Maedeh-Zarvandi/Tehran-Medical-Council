@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TehranMedicalCouncil" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-P2RU5ID;Initial Catalog=TehranMedicalCouncil;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="TehranMedicalCouncilConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.userOne" Member="userOnes">
+    <Type Name="userOne">
+      <Column Name="username" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="passwordd" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Time_slot" Member="Time_slots">
+    <Type Name="Time_slot">
+      <Column Name="ID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="day" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="start_time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="end_time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="start_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Time_slot_Category" Member="Categories" ThisKey="ID" OtherKey="time_slot_id" Type="Category" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tariff" Member="Tariffs">
+    <Type Name="Tariff">
+      <Column Name="ID" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="type_of_tariff" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="Tariff_Laboratory" Member="Laboratories" ThisKey="ID" OtherKey="tariff_id" Type="Laboratory" />
+      <Association Name="Tariff_Hospital" Member="Hospitals" ThisKey="ID" OtherKey="tariff_id" Type="Hospital" />
+      <Association Name="Tariff_Faculty" Member="Faculties" ThisKey="ID" OtherKey="tariff_id" Type="Faculty" />
+      <Association Name="Tariff_Clinic" Member="Clinics" ThisKey="ID" OtherKey="tariff_id" Type="Clinic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Laboratory" Member="Laboratories">
+    <Type Name="Laboratory">
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="field_of_research" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="doctor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="address_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tariff_id" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="total_experiment" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="lab_budget" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="established_year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Tariff_Laboratory" Member="Tariff" ThisKey="tariff_id" OtherKey="ID" Type="Tariff" IsForeignKey="true" />
+      <Association Name="Doctor_Laboratory" Member="Doctor" ThisKey="doctor_id" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Address_Laboratory" Member="Address" ThisKey="address_id" OtherKey="ID" Type="Address" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Hospital" Member="Hospitals">
+    <Type Name="Hospital">
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="address_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="doctor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="tariff_id" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="capacity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="establishedـyear" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Hos_budget" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="Tariff_Hospital" Member="Tariff" ThisKey="tariff_id" OtherKey="ID" Type="Tariff" IsForeignKey="true" />
+      <Association Name="Doctor_Hospital" Member="Doctor" ThisKey="doctor_id" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Category_Hospital" Member="Category" ThisKey="category_id" OtherKey="ID" Type="Category" IsForeignKey="true" />
+      <Association Name="Address_Hospital" Member="Address" ThisKey="address_id" OtherKey="ID" Type="Address" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Doctor" Member="Doctors">
+    <Type Name="Doctor">
+      <Column Name="first_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="last_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="faculty" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="salary" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="grade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Doctor_Laboratory" Member="Laboratories" ThisKey="ID" OtherKey="doctor_id" Type="Laboratory" />
+      <Association Name="Doctor_Hospital" Member="Hospitals" ThisKey="ID" OtherKey="doctor_id" Type="Hospital" />
+      <Association Name="Doctor_Faculty" Member="Faculties" ThisKey="ID" OtherKey="doctor_id" Type="Faculty" />
+      <Association Name="Doctor_Clinic" Member="Clinics" ThisKey="ID" OtherKey="doctor_id" Type="Clinic" />
+      <Association Name="Doctor_Category" Member="Categories" ThisKey="ID" OtherKey="doctor_id" Type="Category" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Faculty" Member="Faculties">
+    <Type Name="Faculty">
+      <Column Name="university_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="university_id" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="university_adr" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="doctor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tariff_id" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Association Name="Doctor_Faculty" Member="Doctor" ThisKey="doctor_id" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Tariff_Faculty" Member="Tariff" ThisKey="tariff_id" OtherKey="ID" Type="Tariff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Clinic" Member="Clinics">
+    <Type Name="Clinic">
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="address_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="doctor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="tariff_id" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="capacity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="establishedـyear" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cil_budget" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="Doctor_Clinic" Member="Doctor" ThisKey="doctor_id" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Tariff_Clinic" Member="Tariff" ThisKey="tariff_id" OtherKey="ID" Type="Tariff" IsForeignKey="true" />
+      <Association Name="Category_Clinic" Member="Category" ThisKey="category_id" OtherKey="ID" Type="Category" IsForeignKey="true" />
+      <Association Name="Address_Clinic" Member="Address" ThisKey="address_id" OtherKey="ID" Type="Address" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="time_slot_id" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="doctor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cat_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Category_Hospital" Member="Hospitals" ThisKey="ID" OtherKey="category_id" Type="Hospital" />
+      <Association Name="Category_Clinic" Member="Clinics" ThisKey="ID" OtherKey="category_id" Type="Clinic" />
+      <Association Name="Doctor_Category" Member="Doctor" ThisKey="doctor_id" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Time_slot_Category" Member="Time_slot" ThisKey="time_slot_id" OtherKey="ID" Type="Time_slot" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Address" Member="Addresses">
+    <Type Name="Address">
+      <Column Name="address" Member="address1" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="address2" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="district" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="postal_code" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="last_update" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Address_Laboratory" Member="Laboratories" ThisKey="ID" OtherKey="address_id" Type="Laboratory" />
+      <Association Name="Address_Hospital" Member="Hospitals" ThisKey="ID" OtherKey="address_id" Type="Hospital" />
+      <Association Name="Address_Clinic" Member="Clinics" ThisKey="ID" OtherKey="address_id" Type="Clinic" />
+    </Type>
+  </Table>
+</Database>
